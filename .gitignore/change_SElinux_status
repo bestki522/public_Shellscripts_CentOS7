@@ -1,8 +1,9 @@
 #!/bin/bash
 STATUS=`getenforce`
+echo "current SELinux status is $STATUS, continue to modify status changes..."
 case "$STATUS" in
    "Disabled")
-        echo "1. Enforcing 2.Permissive"
+        echo "Choose your option by pressing number 1.Enforcing 2.Permissive"
         read select
         case $select in
                 1) echo "processing Enforcing..."
@@ -14,7 +15,7 @@ case "$STATUS" in
         esac
         ;;
    "Enforcing")
-        echo "1.Permissive 2.Disable"
+        echo "choose your option by pressing number 1.Permissive 2.Disable"
         read select1
         case $select1 in
                 1) echo "processing Permissive..."
@@ -26,7 +27,7 @@ case "$STATUS" in
         esac
         ;;
    "Permissive")
-        echo "1.Enforcing 2.Disable"
+        echo "Choose your option by pressing 1.Enforcing 2.Disable"
         read select2
         case $select2 in
                 1) echo "processing Enforcing..."
@@ -38,5 +39,4 @@ case "$STATUS" in
         esac
         ;;
 esac
-
 exit
