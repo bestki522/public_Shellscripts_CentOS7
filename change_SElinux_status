@@ -1,0 +1,91 @@
+#!/bin/bash
+STATUS=`getenforce`
+echo "current SELinux status is $STATUS, continue to modify status changes..."
+case "$STATUS" in
+   "Disabled")
+        echo "Choose your option by pressing number 1.Enforcing 2.Permissive"
+        read select
+        case $select in
+                1) echo "processing Enforcing..."
+                   sed -i '7s/enforcing/disabled/g' /etc/selinux/config
+                   echo "Press 1.Reboot to take effect 2.Reboot later... "
+                   read reboot0
+                   if [ $reboot0 -eq 1 ]; then
+                        echo "Rebooting..."
+                        init 6
+                   else
+                        exit
+                   fi
+                ;;
+                2) echo "processing Permissive..."
+                   sed -i '7s/disabled/permissive/g' /etc/selinux/config
+                   echo "Press 1.Reboot to take effect 2.Reboot later... "
+                   read reboot1
+                   if [ $reboot1 -eq 1 ]; then
+                        echo "Rebooting..."
+                        init 6
+                   else
+                        exit
+                   fi
+                ;;
+        esac
+        ;;
+   "Enforcing")
+        echo "choose your option by pressing number 1.Permissive 2.Disable"
+        read select1
+        case $select1 in
+                1) echo "processing Permissive..."
+                   sed -i '7s/enforcing/permissive/g' /etc/selinux/config
+                   echo "Press 1.Reboot to take effect 2.Reboot later... "
+                   read reboot2
+                   if [ $reboot2 -eq 1 ]; then
+                        echo "Rebooting..."
+                        init 6
+                   else
+                        exit
+                   fi
+                ;;
+                2) echo "processing Disable..."
+                   sed -i '7s/enforcing/disabled/g' /etc/selinux/config
+                   echo "Press 1.Reboot to take effect 2.Reboot later... "
+                   read reboot3
+                   if [ $reboot3 -eq 1 ]; then
+                        echo "Rebooting..."
+                        init 6
+                   else
+                        exit
+                   fi
+                ;;
+        esac
+        ;;
+   "Permissive")
+        echo "Choose your option by pressing 1.Enforcing 2.Disable"
+        read select2
+        case $select2 in
+                1) echo "processing Enforcing..."
+                   sed -i '7s/permissive/enforcing/g' /etc/selinux/config
+                   echo "Press 1.Reboot to take effect 2.Reboot later... "
+                   read reboot4
+                   if [ $reboot4 -eq 1 ]; then
+                        echo "Rebooting..."
+                        init 6
+                   else
+                        exit
+                   fi
+                ;;
+                2) echo "processing Disable..."
+                   sed -i '7s/permissive/disabled/g' /etc/selinux/config
+                   echo "Press 1.Reboot to take effect 2.Reboot later... "
+                   read reboot
+                   if [ $reboot5 -eq 1 ]; then
+                        echo "Rebooting..."
+                        init 6
+                   else
+                        exit
+                   fi
+                ;;
+        esac
+        ;;
+esac
+
+exit
