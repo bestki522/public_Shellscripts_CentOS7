@@ -12,5 +12,9 @@ fi
 ssh-keygen -t rsa -f /$HOME/.ssh/$USER -N ''
 cat /$HOME/.ssh/$USER.pub > /$HOME/.ssh/authorized_keys
 sudo systemctl restart sshd
+echo "this is $USER'privatekey"
+echo "#############################################"
+cat /$HOME/.ssh/$USER
+
 
 exit
