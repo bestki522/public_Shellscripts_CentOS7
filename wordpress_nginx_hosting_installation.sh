@@ -1,5 +1,5 @@
 #!/bin/bash
-Domain_Name="testwp.paradiseio.com"
+Domain_Name="testwp.testwp.com"
 Web_Dir="/usr/share/nginx/wordpress"
 
 ################ Cai dat repo remi va epel cho lenh Yum #############
