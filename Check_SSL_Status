@@ -1,8 +1,7 @@
-#!/bin/bash
 
+#!/bin/bash
 #touch ./success && chmod 777 ./success
 #touch ./fail && chmod 777 ./fail
-
 echo -e "Domain|Valid Date|Expired Date|Remaining Days" > ./success
 #printf "%25s %25s %25s %25s" "Domain" "Valid Date" "Expired Date" "Remaining Days" > ./success
 for domain in $(cat ./$1)
@@ -10,8 +9,8 @@ do
         echo "Dang kiem tra SSL domain $domain..."
         echo | openssl s_client -servername $domain -connect $domain:443 2>/dev/null | openssl x509 -noout 2>/dev/null
         if [ $? -eq 0 ];then
-                start=$(echo | openssl s_client -servername $domain -connect $domain:443 2>/dev/null | openssl x509 -noout -dates | gre$
-                end=$(echo | openssl s_client -servername $domain -connect $domain:443 2>/dev/null | openssl x509 -noout -dates | grep $
+                start=$(echo | openssl s_client -servername $domain -connect $domain:443 2>/dev/null | openssl x509 -noout -dates | grep notBefore | cut -d'=' -f2)
+                end=$(echo | openssl s_client -servername $domain -connect $domain:443 2>/dev/null | openssl x509 -noout -dates | grep notAfter | cut -d'=' -f2)
                 d=$(date -d "$end" +%s)
                 now=$(date +%s)
                 remain=$(echo $(( (d - now) / 86400 ))days)
@@ -20,7 +19,5 @@ do
                 echo "$domain SSL unavailable" >> ./fail
         fi
 done
-
 column -s "|" -t ./success > ./result && cat ./fail >> ./result && rm -rf ./success ./fail
-
 echo "Da hoan thanh kiem tra SSL toan bo"
