@@ -1,15 +1,17 @@
 #!/bin/bash
+
+
 #touch ./success && chmod 777 ./success
 #touch ./fail && chmod 777 ./fail
 
-echo -e "Domain|Valid Date|Expired Date|Remaining Days|Issue" > ./temp
+echo -e "Domain|Valid Date|Expired Date|Remaining Days|Issuer" > ./temp
 for domain in $(cat ./$1)
 do
         echo "Dang kiem tra SSL domain $domain..."
         echo | openssl s_client -servername $domain -connect $domain:443 2>/dev/null | openssl x509 -noout 2>/dev/null
         if [ $? -eq 0 ];then
-                start=$(echo | openssl s_client -servername $domain -connect $domain:443 2>/dev/null | openssl x509 -noout -dates | grep notBefore | cut -d'=' –f2)
-                end=$(echo | openssl s_client -servername $domain -connect $domain:443 2>/dev/null | openssl x509 -noout -dates | grep notAfter | cut -d'=' –f2)
+                start=$(echo | openssl s_client -servername $domain -connect $domain:443 2>/dev/null | openssl x509 -noout -dates | grep notBefore | cut -d'=' -f2)
+                end=$(echo | openssl s_client -servername $domain -connect $domain:443 2>/dev/null | openssl x509 -noout -dates | grep notAfter | cut -d'=' -f2)
                 d=$(date -d "$end" +%s)
                 now=$(date +%s)
                 remain=$(echo $(( (d - now) / 86400 ))days)
@@ -25,7 +27,3 @@ column -s "|" -t ./temp > $1_ssl_result
 rm -rf ./temp
 
 echo "Da hoan thanh kiem tra SSL toan bo file $1"
-
-#d1=$(date -d "$1" +%s)
-#d2=$(date -d "$2" +%s)
-#echo $(( (d1 - d2) / 86400 )) days
