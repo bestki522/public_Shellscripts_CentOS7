@@ -1,6 +1,12 @@
+#=====  FUNCTION  =============================================================
+#          NAME:  CHECK SSL STATUS, OUTPUT REPORT IN RAW & CSV
+#   DESCRIPTION:  Using Linux openssl command
+#         USAGE:  Execute the shell with domain list parameters (1 column)
+#       RETURNS:  RAW & CSV REPORT FILE
+#        AUTHOR:  IVAN
+#==============================================================================
+
 #!/bin/bash
-
-
 #touch ./success && chmod 777 ./success
 #touch ./fail && chmod 777 ./fail
 
