@@ -7,10 +7,8 @@
 #==============================================================================
 
 #!/bin/bash
-#touch ./success && chmod 777 ./success
-#touch ./fail && chmod 777 ./fail
 
-echo -e "Domain|Valid Date|Expired Date|Remaining Days|Issuer" > ./temp
+echo -e "Domain|Valid Date|Expired Date|Remaining Days|Issuer" > ./$1_temp
 for domain in $(cat ./$1)
 do
         echo "Dang kiem tra SSL domain $domain..."
@@ -22,14 +20,14 @@ do
                 now=$(date +%s)
                 remain=$(echo $(( (d - now) / 86400 ))days)
                 issue=$(echo | openssl s_client -servername $domain -connect $domain:443 2>/dev/null | openssl x509 -noout -issuer | grep issuer )
-                echo -e "$domain|$start|$end|$remain|$issue" >> ./temp
+                echo -e "$domain|$start|$end|$remain|$issue" >> ./$1_temp
         else
-                echo -e "$domain|invalid|invalid|invalid|invalid" >> ./temp
+                echo -e "$domain|invalid|invalid|invalid|invalid" >> ./$1_temp
         fi
 done
 
-column -s "|" -o "," -t ./temp > $1_ssl_result.csv
-column -s "|" -t ./temp > $1_ssl_result
-rm -rf ./temp
+column -s "|" -o "," -t ./$1_temp > $1_ssl_result.csv
+column -s "|" -t ./$1_temp > $1_ssl_result
+rm -rf ./$1_temp
 
 echo "Da hoan thanh kiem tra SSL toan bo file $1"
