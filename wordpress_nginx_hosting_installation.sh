@@ -49,7 +49,7 @@ fi
 cat > /etc/nginx/conf.d/$Domain_Name.conf << EOF
 server {
         listen       80;
-        server_name  testwp.paradiseio.com;
+        server_name  $Domain_Name;
         root         /usr/share/nginx/wordpress;
         index   index.php index.html;
         # Load configuration files for the default server block.
