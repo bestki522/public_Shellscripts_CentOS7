@@ -50,7 +50,7 @@ cat > /etc/nginx/conf.d/$Domain_Name.conf << EOF
 server {
         listen       80;
         server_name  $Domain_Name;
-        root         /usr/share/nginx/wordpress;
+        root         $Web_Dir;
         index   index.php index.html;
         # Load configuration files for the default server block.
         include /etc/nginx/default.d/*.conf;
